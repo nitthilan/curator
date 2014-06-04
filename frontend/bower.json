@@ -20,7 +20,8 @@
     "angular-bootstrap": "~0.10.0",
     "angular-ui-utils": "~0.1.1",
     "ng-flow": "~2",
-    "videogular": "~1.0.0"
+    "videogular": "~0.4.1",
+    "angular-elastic": "~2.3.3"
   },
   "devDependencies": {}
 }
