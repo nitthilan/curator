@@ -1,1 +1,0 @@
-{ "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "ecomm_database.products", "name" : "_id_" }, { "v" : 1, "key" : { "style" : 1 }, "unique" : true, "ns" : "ecomm_database.products", "name" : "style_1", "background" : true, "safe" : true } ] }
