@@ -1,0 +1,1 @@
+{ "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "curator.channels", "name" : "_id_" }, { "v" : 1, "key" : { "title" : 1 }, "unique" : true, "ns" : "curator.channels", "name" : "title_1", "background" : true, "safe" : null }, { "v" : 1, "key" : { "feedUrl" : 1 }, "unique" : true, "ns" : "curator.channels", "name" : "feedUrl_1", "background" : true, "safe" : null } ] }

@@ -1,0 +1,1 @@
+{ "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "name" : "_id_", "ns" : "curator.articles" }, { "v" : 1, "unique" : true, "key" : { "link" : 1 }, "name" : "link_1", "ns" : "curator.articles", "sparse" : true, "dropDups" : true } ] }
