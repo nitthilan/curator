@@ -1,0 +1,5 @@
+error cases:
+============
+	- Some articles do not have link and so database store fails
+	- feedparser fails for feedburner related links
+	- 

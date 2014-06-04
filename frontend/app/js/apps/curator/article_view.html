@@ -1,0 +1,166 @@
+<nav class="navbar navbar-inverse" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href ng-click=changeLocation('/home')>
+      	<span class="glyphicon glyphicon-home"></span>Sandana</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href ng-click=changeLocation('/add_friend')>AddFriends</a></li>
+        <li><a href ng-click=changeLocation('/create_group')>CreateGroup</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-search" style="color:blue"></span></span>
+            <input type="text" class="form-control" ng-model="searchString" placeholder="Search Filter">
+          </div><!-- /input-group -->
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-btn">
+              <button class="btn btn-primary" ng-click=addArticle(articleUrl) type="button">add</button>
+            </span>
+            <input type="text" class="form-control" ng-model="articleUrl" placeholder={{addArticlePlaceholder}}>
+          </div><!-- /input-group -->
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-btn">
+              <button class="btn btn-primary" ng-click=addChannel(feedUrl) type="button">add</button>
+            </span>
+            <input type="text" class="form-control" ng-model="feedUrl" placeholder={{addChannelPlaceholder}}>
+          </div><!-- /input-group -->
+        </div>
+        <div class="col-md-1">
+          <button class="btn btn-primary" ng-click=updateAllChannels() type="button">update all</button>
+        </div>
+      </div>
+
+      <div class="well well-lg">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="input-group input-group-sm">
+              <span class="input-group-btn">
+                <button class="btn btn-primary" ng-click=addCategory(newCategory) type="button">add</button>
+              </span>
+              <input type="text" class="form-control" ng-model="newCategory" placeholder="new category">
+            </div><!-- /input-group -->
+          </div>            
+          <div class="col-md-9">
+            <button ng-repeat="category in categories" class="btn btn-success btn-xs" type="button" ng-click=deleteCategory(category)>{{category._id}}</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <select ui-select2="{ allowClear: true}" ng-model="selectedCategory" class="form-control" data-placeholder="Choose category">
+            <option value=""></option>
+            <option ng-repeat="category in categories | orderBy:'_id':true" value="{{category._id}}">{{category._id}}</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <select ui-select2="{ allowClear: true}" ng-model="selectedChannel" class="form-control" data-placeholder="Choose channel">
+            <option value=""></option>
+            <option ng-repeat="channel in channelList | filter:selectedCategory | orderBy:'numArticles':true" value="{{channel._id}}">{{channel.title}}({{channel.numArticles}})</option>
+          </select>
+        </div>
+        
+        <div class="col-md-4">
+          <button class="btn btn-primary" type="button" ng-click="isRead=!isRead">Read:{{isRead}}</button>
+          <button class="btn btn-primary" type="button" ng-click="isLike=!isLike">Like:{{isLike}}</button>
+          <button class="btn btn-primary" type="button" ng-click="readLater=!readLater">ReadLater:{{readLater}}</button>
+          <button class="btn btn-primary" type="button" ng-click="showChannel=false;getArticles()">Get Articles</button>
+          <button class="btn btn-primary" type="button" ng-click="showChannel=true">Show Channels</button>
+        </div>
+      </div>      
+
+      <ul ng-show="!showChannel"  class="media-list" ng-repeat="article in articleList| filter:{$:searchString, isRead:isRead, isLike:isLike, readLater:readLater} | orderBy:'pubDate':true ">
+        <li class="media">
+          <a class="pull-left" href={{article.link}}>
+            <img class="media-object image_max_height_100px" ng-src="{{article.imageUrl}}" alt="image not loaded" max-width=100px>
+          </a>
+          <div class="media-body">
+            <a href={{article.link}} target="_blank"><h4 class="panel-title">{{article.title}}</h4></a>
+            <button type="button" class="close" aria-hidden="true" ng-click="article.isRead=!article.isRead;saveArticle(article,{isRead:article.isRead})">&times;</button>
+            <span class="badge">{{article.author}}</span>
+            <p>{{article.gist}}</p>
+            <div class="btn-group btn-group-xs">
+              <button type="button" class="btn btn-primary" ng-click="article.isLike=!article.isLike;saveArticle(article,{isLike:article.isLike})">Like:{{article.isLike}}</button>
+              <button type="button" class="btn btn-primary" ng-click="article.readLater=!article.readLater;saveArticle(article,{readLater:article.readLater})">ReadLater:{{article.readLater}}</button>
+            </div>
+            <span class="badge">{{article.pubDate|date:'medium'}}</span>
+
+            <span ng-show="!editCategory" ng-repeat="category in article.categories" class="label label-success">
+            {{category}} </span>
+            <button ng-show="!editCategory" class="btn btn-primary btn-xs" type="button" ng-click="editCategory = !editCategory">edit</button>
+            <select ng-show="editCategory" ui-select2="{ allowClear: true}" ng-model="article.categories" style="width:400px" data-placeholder="Choose category" multiple>
+              <option value=""></option>
+              <option ng-repeat="category in categories | orderBy:'_id':true" value="{{category._id}}">{{category._id}}</option>
+            </select>          
+            <button ng-show="editCategory" class="btn btn-primary btn-xs" type="button" ng-click="saveArticle(article,{categories:article.categories});editCategory = !editCategory">save</button>
+          </div>
+        </li>
+      </ul>
+
+
+      <ul ng-show="showChannel" class="list-group">
+        <li class="list-group-item active">Channel List</li>
+        <li ng-repeat="channel in channelList| filter:selectedCategory |filter:searchString | orderBy:'numArticles':true " class="list-group-item">
+          <button type="button" class="close" aria-hidden="true" ng-click="chooseChannelToBeDeleted(channel)" data-toggle="modal" data-target="#confirmDelete">&times;</button>          
+          <span class="badge">{{channel.numArticles}}</span> 
+          <span class="badge">{{channel.numQueryFailures}}</span>
+          <span class="badge">{{channel.lastUpdatedDate|date:'medium'}}</span>
+
+          <a href={{channel.feedUrl}} target="_blank">{{channel.title}} </a>
+          <span ng-show="!editCategory" ng-repeat="category in channel.categories" class="label label-success">
+          {{category}} </span>
+          <button ng-show="!editCategory" class="btn btn-primary btn-xs" type="button" ng-click="editCategory = !editCategory">edit</button>
+          <select ng-show="editCategory" ui-select2="{ allowClear: true}" ng-model="channel.categories" style="width:400px" data-placeholder="Choose category" multiple>
+            <option value=""></option>
+            <option ng-repeat="category in categories | orderBy:'_id':true" value="{{category._id}}">{{category._id}}</option>
+          </select>          
+          <button ng-show="editCategory" class="btn btn-primary btn-xs" type="button" ng-click="saveChannel(channel);editCategory = !editCategory">save</button>
+          </li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+      </div>
+
+      <div class="modal-body">
+        <a href={{channelToBeDeleted.feedUrl}} target="_blank">{{channelToBeDeleted.title}} </a>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="deleteChannel()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,26 @@
+{
+  "name": "curator",
+  "version": "1.0.0",
+  "main": "path/to/main.css",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt"
+  ],
+  "dependencies": {
+    "angular-ui-select2": "~0.0.5",
+    "bootstrap": "~3.1.1",
+    "angular-socket-io": "~0.4.1",
+    "socket.io-client": "~0.9.16",
+    "angular": "~1.2.16",
+    "select2": "~3.4.6",
+    "angular-route": "~1.2.16",
+    "angular-resource": "~1.2.16",
+    "angular-sanitize": "~1.2.16",
+    "angular-local-storage": "~0.0.1",
+    "angular-bootstrap": "~0.10.0",
+    "angular-ui-utils": "~0.1.1",
+    "ng-flow": "~2",
+    "videogular": "~1.0.0"
+  },
+  "devDependencies": {}
+}

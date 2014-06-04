@@ -1,0 +1,28 @@
+Probable features:
+	- usemin - to package css, html and js into a folder
+		- https://github.com/yeoman/grunt-usemin
+
+Not read yet:
+============
+optimising the delivery: 
+	- http://googlecode.blogspot.in/2009/09/gmail-for-mobile-html5-series-reducing.html
+	- https://alexsexton.com/blog/2013/03/deploying-javascript-applications/
+Chat room application:
+	- http://psitsmike.com/2011/10/node-js-and-socket-io-multiroom-chat-tutorial/
+Threejs demos:
+	- http://stemkoski.github.io/Three.js/index.html
+	- http://www.youtube.com/watch?v=OWHJa0jKJgo
+
+
+Select2 notes:
+	- possible options: 
+		- { maximumSelectionSize: 3 } - max number of multiple selections
+		- minimumInputLength: 2 - num characters for search to work
+		- allowClear: true - enables clearing all selections
+		- placeholder: "Select a State" - place holder text
+		- tags:["red", "green", "blue"] - enables tags in select2
+		- type anything to add into the tag
+		- maximumInputLength: 10 - maximum words allowed for a tag
+		- tokenSeparators: [",", " "] - add tags as and when the token separator appears
+		- minimumResultsForSearch - number of results to be shown for search
+		- closeOnSelect - default true, if false, keeps the search open for multiple selection

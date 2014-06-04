@@ -1,0 +1,49 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href ng-click=changeLocation('/home')>
+      	<span class="glyphicon glyphicon-home"></span>Sandana</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+      	<form class="navbar-form navbar-left" role="search">
+		  <div class="form-group">
+		    <select ui-select2="{ allowClear: true}" ng-model="selectedNoteId" class="form-control" data-placeholder="Choose note">
+	    	    <option value=""></option>
+	        	<option ng-repeat="note in notesList | orderBy:'lastSavedDate':true" value="{{note._id}}">{{note.title}}</option>
+	      	</select>
+		  </div>
+		  <button class="btn btn-primary navbar-btn" type="button" ng-click="addNote(selectedNoteId)">add</button>
+		</form>
+		<form class="navbar-form navbar-left" role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" ng-model="newNote" placeholder="{{createNotePlaceHolder}}">
+			</div>
+			<button type="submit" ng-click=createNote(newNote) class="btn btn-primary">create</button>
+		</form>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<tabset justified="false">
+  <tab ng-repeat="note in activeNotesList" select="selected(note)" deselect="deselected(note)">
+  	<tab-heading>{{note.title}}<span ng-show="!note.dataSaved"class="glyphicon glyphicon-asterisk"></span><button type="button" ng-click=removeNote(note) class="close" aria-hidden="true">&times;</button></tab-heading>
+  	<div class="container-fluid">
+  	  <div class="row">
+  	  	<div class="col-md-12" >
+  			<code><textarea id='{{note.title}}' spellcheck=false style="background-color:black;color:white;" ui-keydown="{9:'tabCallBack($event, note)','ctrl-space':'saveCallBack($event, note)'}" class="form-control msd-elastic" ng-model="note.description" ng-change="changeCallBack(note)" id="textarea" rows="6" placeholder="Enter a short synopsis"></textarea></code>
+  		  </div>
+  	  </div>
+    </div>
+  </tab>
+</tabset>
+

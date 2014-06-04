@@ -1,0 +1,12 @@
+<videogular vg-width=608 vg-height=256 vg-theme="config.theme">
+    <video ng-src='{{video_src}}' type='video/webm' class='videoPlayer' controls preload='none' autoplay>
+    </video>
+</videogular>
+<div flow-init>
+    <input type="file" flow-btn />
+	<input type="file" flow-btn flow-directory />
+	<tr ng-repeat="file in $flow.files">
+	    <td>{{$index+1}}</td>
+	    <td>{{file.name}}</td>
+	</tr>
+</div>

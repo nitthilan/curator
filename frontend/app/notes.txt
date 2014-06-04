@@ -1,0 +1,10 @@
+bugs:
+
+
+Features:
+- Implement storage using localStorage but it seems to have a max limit of 5Mb. Convert to file persistence later
+
+
+Quirks:
+- ng-repeat with track by $index does not work with orderBy
+- use filter before orederBy to work properly
